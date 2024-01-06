@@ -52,7 +52,7 @@ class tdb:
                 else slice(None)
                 for i in range(tensor_clone.dim())
             )
-            _print(tensor_clone[slice_].data)
+            _print(tensor_clone[slice_].data.cpu())
             torch.set_printoptions(profile="default")
 
         if metadata:
@@ -64,12 +64,12 @@ class tdb:
             if (tensor_clone.dtype.is_floating_point or tensor_clone.dtype.is_complex):
                 _print(
                     f"mean{assignment_symbol}{tensor_clone.mean().item():.3f}, "
-                    f"std{assignment_symbol}{tensor_clone.std().item():.3f}, ",
+                    f"std{assignment_symbol}{tensor_clone.std().item():.3f}",
                 )
             else:
                 _print(
                     f"mean{assignment_symbol}{tensor_clone.float().mean().item():.3f}, "
-                    f"std{assignment_symbol}{tensor_clone.float().std().item():.3f}, ",
+                    f"std{assignment_symbol}{tensor_clone.float().std().item():.3f}",
                 )
             # Warning: this section is using original tensor
             _print(
