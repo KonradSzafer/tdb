@@ -71,9 +71,10 @@ class tdb:
                     f"mean{assignment_symbol}{tensor_clone.float().mean().item():.3f}, "
                     f"std{assignment_symbol}{tensor_clone.float().std().item():.3f}, ",
                 )
+            # Warning: this section is using original tensor
             _print(
-                f"{tensor_clone.shape}, "
-                f"dtype{assignment_symbol}{tensor_clone.dtype}, "
-                f"device{assignment_symbol}'{tensor_clone.device}', "
-                f"grad_fn{assignment_symbol}{tensor_clone.grad_fn}\n"
+                f"{tensor.shape}, "
+                f"dtype{assignment_symbol}{tensor.dtype}, "
+                f"device{assignment_symbol}'{tensor.device}', "
+                f"grad_fn{assignment_symbol}{tensor.grad_fn}\n"
             )
