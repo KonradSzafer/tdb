@@ -4,13 +4,13 @@ import torch
 class tdb:
 
     options = {
-        "print_values_threshold": 10,
         "disable": False,
+        "print_values_threshold": 10,
         "assigment_symbol": "=",
     }
 
     @staticmethod
-    def set_options(**kwargs):
+    def set_options(**kwargs) -> None:
         for key, value in kwargs.items():
             if key not in tdb.options:
                 raise KeyError(f"Unknown option: {key}")
@@ -21,13 +21,13 @@ class tdb:
         tensor: torch.Tensor,
         title: str = None,
         values: bool = True,
-        metadata: bool = True,
+        stats: bool = True,
+        meta: bool = True,
         sep: bool = False,
         ) -> None:
 
-        def _print(*args, **kwargs) -> None:
-            if not tdb.options["disable"]:
-                print(*args, **kwargs)
+        if tdb.options["disable"]:
+            return
 
         if not isinstance(tensor, torch.Tensor):
             raise TypeError("The input must be a PyTorch tensor.")
@@ -36,14 +36,14 @@ class tdb:
         tensor_clone = tensor.clone() # Avoid modifying the original tensor
 
         if sep:
-            _print("-"*100)
+            print("-"*100)
         
         if title is not None:
-            _print(title, end="")
+            print(title, end="")
             if values:
-                _print(" => ", end="")
+                print(" => ", end="")
             else:
-                _print()
+                print()
 
         if values:
             torch.set_printoptions(threshold=tdb.options["print_values_threshold"])
@@ -52,27 +52,29 @@ class tdb:
                 else slice(None)
                 for i in range(tensor_clone.dim())
             )
-            _print(tensor_clone[slice_].data.cpu())
+            print(tensor_clone[slice_].data.cpu())
             torch.set_printoptions(profile="default")
-
-        if metadata:
-            _print(
+        
+        if stats:
+            print(
                 f"min{assignment_symbol}{tensor_clone.min().item():.3f}, "
                 f"max{assignment_symbol}{tensor_clone.max().item():.3f}, ",
                 end=""
             )
             if (tensor_clone.dtype.is_floating_point or tensor_clone.dtype.is_complex):
-                _print(
+                print(
                     f"mean{assignment_symbol}{tensor_clone.mean().item():.3f}, "
                     f"std{assignment_symbol}{tensor_clone.std().item():.3f}",
                 )
             else:
-                _print(
+                print(
                     f"mean{assignment_symbol}{tensor_clone.float().mean().item():.3f}, "
                     f"std{assignment_symbol}{tensor_clone.float().std().item():.3f}",
                 )
+
+        if meta:
             # Warning: this section is using original tensor
-            _print(
+            print(
                 f"{tensor.shape}, "
                 f"dtype{assignment_symbol}{tensor.dtype}, "
                 f"device{assignment_symbol}'{tensor.device}', "
