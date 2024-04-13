@@ -33,13 +33,11 @@ class tdb:
         if not isinstance(objects, list):
             objects = list(objects)
         for i in range(len(objects)):
-            if hasattr(objects[i], "to"):
-                objects[i] = objects[i].to("cpu")
-            elif isinstance(objects[i], torch.Tensor):
-                objects[i] = objects[i].cpu()
             objects[i] = None
         gc.collect()
-        if torch.cuda.is_available():
+        if torch.backends.mps.is_available() and torch.backends.mps.is_built():
+            torch.mps.empty_cache()
+        else:
             torch.cuda.empty_cache()
         return objects
 
