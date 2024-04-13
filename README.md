@@ -44,6 +44,6 @@ tdb.options['print_values_threshold'] = 10 # Determines the maximum number of va
 tdb.options['assignment_symbol'] = '=' # Specifies the symbol used to separate tensor parameters from their values
 ```
 
-### Acknowledgements:
+## Acknowledgements:
 
 Memory functions inspired by [Zach Mueller blog post](https://muellerzr.github.io/til/free_memory.html)
