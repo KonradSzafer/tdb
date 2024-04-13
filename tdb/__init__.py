@@ -1,6 +1,7 @@
 from .tdb import tdb
 
-instance = tdb()
 options = tdb.options
 set_options = tdb.set_options
+print_memory = tdb.print_memory
+release_memory = tdb.release_memory
 print = tdb.print

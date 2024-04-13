@@ -1,3 +1,4 @@
+import gc
 import torch
 
 
@@ -15,6 +16,32 @@ class tdb:
             if key not in tdb.options:
                 raise KeyError(f"Unknown option: {key}")
             tdb.options[key] = value
+            
+    @staticmethod
+    def print_memory() -> None:
+        if tdb.options["disable"]:
+            return
+        print(
+            f"Memory allocated: {torch.cuda.memory_allocated() / 1024**3:.2f} GB, "
+            f"Max memory allocated: {torch.cuda.max_memory_allocated() / 1024**3:.2f} GB, "
+            f"Memory cached: {torch.cuda.memory_cached() / 1024**3:.2f} GB, "
+            f"Max memory cached: {torch.cuda.max_memory_cached() / 1024**3:.2f} GB"
+        )
+    
+    @staticmethod
+    def release_memory(*objects):
+        if not isinstance(objects, list):
+            objects = list(objects)
+        for i in range(len(objects)):
+            if hasattr(objects[i], "to"):
+                objects[i] = objects[i].to("cpu")
+            elif isinstance(objects[i], torch.Tensor):
+                objects[i] = objects[i].cpu()
+            objects[i] = None
+        gc.collect()
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+        return objects
 
     @staticmethod
     def print(

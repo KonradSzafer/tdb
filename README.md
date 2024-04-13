@@ -2,12 +2,15 @@
 
 **tdb** is a lightweight, intuitive Python library designed for efficient debugging and exploration of PyTorch tensors. It streamlines development and improves troubleshooting by offering a straightforward interface for inspecting tensor values and shapes, facilitating a better understanding of operations and data flow in PyTorch.
 
-### Installation:
+## Installation:
 ```bash
 pip install git+https://github.com/KonradSzafer/tdb.git
 ```
 
-### Usage:
+## Usage:
+
+### Debugging:
+
 ```python
 import tdb
 
@@ -20,9 +23,27 @@ tdb.print(x, 'x')
 <!-- ### Example Usage:
 ![](assets/example_output_2.png) -->
 
+### Memory Management:
+
+Use the following function to free the CUDA memory of the given models and tensors. The function returns objects with their memory released:
+```python
+import tdb
+
+model, batch, output = tdb.release_memory(model, batch, output)
+```
+
+To see the current memory usage, run:
+```python
+tdb.print_memory()
+```
+
 ### Configuration Options:
 ```python
 tdb.options['disable'] = False # Set to True to disable all tdb output
 tdb.options['print_values_threshold'] = 10 # Determines the maximum number of values to display from the last dimension of a tensor
 tdb.options['assignment_symbol'] = '=' # Specifies the symbol used to separate tensor parameters from their values
 ```
+
+### Acknowledgements:
+
+Memory functions inspired by [Zach Mueller blog post](https://muellerzr.github.io/til/free_memory.html)
