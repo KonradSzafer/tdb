@@ -6,7 +6,7 @@ class tdb:
 
     options = {
         "disable": False,
-        "print_values_threshold": 10,
+        "max_values": 10,
         "assigment_symbol": "=",
     }
 
@@ -42,7 +42,13 @@ class tdb:
         return objects
 
     @staticmethod
-    def print(
+    def log(*args, **kwargs) -> None:
+        if tdb.options["disable"]:
+            return
+        print(*args, **kwargs)
+
+    @staticmethod
+    def tlog(
         tensor: torch.Tensor,
         title: str = None,
         values: bool = True,
@@ -71,7 +77,7 @@ class tdb:
                 print()
 
         if values:
-            torch.set_printoptions(threshold=tdb.options["print_values_threshold"])
+            torch.set_printoptions(threshold=tdb.options["max_values"])
             slice_ = tuple(
                 slice(1) if i < len(tensor_clone.shape)-1
                 else slice(None)
