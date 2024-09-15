@@ -44,4 +44,4 @@ tdb.options['assignment_symbol'] = '=' # Specifies the symbol used to separate t
 
 ## Acknowledgements:
 
-Memory functions inspired by [Zach Mueller blog post](https://muellerzr.github.io/til/free_memory.html). Current `release_memory` function is adapted from the [Accelerate library](https://github.com/huggingface/accelerate/blob/main/src/accelerate/utils/memory.py#L29).
+Memory functions are inspired by [Zach Mueller's blog post](https://muellerzr.github.io/til/free_memory.html). The current `release_memory` function is adapted from the [Accelerate library](https://github.com/huggingface/accelerate/blob/main/src/accelerate/utils/memory.py#L29).
