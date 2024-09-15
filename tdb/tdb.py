@@ -78,12 +78,12 @@ class tdb:
 
         if values:
             torch.set_printoptions(threshold=tdb.options["max_values"])
-            slice_ = tuple(
+            _slice = tuple(
                 slice(1) if i < len(tensor_clone.shape)-1
                 else slice(None)
                 for i in range(tensor_clone.dim())
             )
-            print(tensor_clone[slice_].data.cpu())
+            print(tensor_clone[_slice].data.cpu())
             torch.set_printoptions(profile="default")
         
         if stats:
