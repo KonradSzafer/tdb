@@ -24,8 +24,8 @@ class tdb:
         print(
             f"Memory allocated: {torch.cuda.memory_allocated() / 1024**3:.2f} GB, "
             f"Max memory allocated: {torch.cuda.max_memory_allocated() / 1024**3:.2f} GB, "
-            f"Memory cached: {torch.cuda.memory_cached() / 1024**3:.2f} GB, "
-            f"Max memory cached: {torch.cuda.max_memory_cached() / 1024**3:.2f} GB"
+            f"Memory cached: {torch.cuda.memory_reserved() / 1024**3:.2f} GB, "
+            f"Max memory cached: {torch.cuda.memory_reserved() / 1024**3:.2f} GB"
         )
     
     @staticmethod
